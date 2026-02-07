@@ -1,0 +1,58 @@
+name: Claude Auto-Fix
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  claude-fix:
+    if: github.event.label.name == 'claude-fix'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Claude on private repo issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PRIVATE_REPO_PAT }}
+          script: |
+            // Search for the mirrored issue in knowz-platform
+            const searchQuery = `repo:knowz-io/knowz-platform is:issue is:open "knowz-issues#${context.payload.issue.number}" in:body`;
+            const { data: searchResult } = await github.rest.search.issuesAndPullRequests({
+              q: searchQuery,
+            });
+
+            if (searchResult.total_count === 0) {
+              console.log('No mirrored issue found in knowz-platform');
+              await github.rest.issues.createComment({
+                owner: 'knowz-io',
+                repo: 'knowz-issues',
+                issue_number: context.payload.issue.number,
+                body: `The \`claude-fix\` label was added, but no mirrored issue was found in the internal repo. A maintainer will investigate.`
+              });
+              return;
+            }
+
+            const mirror = searchResult.items[0];
+
+            // Add claude-fix label and comment to trigger Claude on the private repo issue
+            await github.rest.issues.addLabels({
+              owner: 'knowz-io',
+              repo: 'knowz-platform',
+              issue_number: mirror.number,
+              labels: ['claude-fix']
+            });
+
+            await github.rest.issues.createComment({
+              owner: 'knowz-io',
+              repo: 'knowz-platform',
+              issue_number: mirror.number,
+              body: '@claude Please investigate this issue and propose a fix.'
+            });
+
+            // Acknowledge on the public issue
+            await github.rest.issues.createComment({
+              owner: 'knowz-io',
+              repo: 'knowz-issues',
+              issue_number: context.payload.issue.number,
+              body: `Claude has been triggered to investigate this issue. We'll update here when there's a proposed fix.`
+            });
+
+            console.log(`Triggered Claude on knowz-platform#${mirror.number}`);

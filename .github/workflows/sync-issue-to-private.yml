@@ -1,0 +1,39 @@
+name: Sync Issue to Private Repo
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create mirror issue in knowz-platform
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PRIVATE_REPO_PAT }}
+          script: |
+            const issue = context.payload.issue;
+            const body = `> Mirrored from knowz-io/knowz-issues#${issue.number}\n> Original: ${issue.html_url}\n\n${issue.body}`;
+
+            const allowedLabels = ['bug', 'feature', 'priority-high'];
+            const labels = issue.labels
+              .map(l => l.name)
+              .filter(l => allowedLabels.includes(l));
+
+            const result = await github.rest.issues.create({
+              owner: 'knowz-io',
+              repo: 'knowz-platform',
+              title: `[PUBLIC] ${issue.title}`,
+              body: body,
+              labels: labels
+            });
+
+            // Comment on public issue with tracking info
+            await github.rest.issues.createComment({
+              owner: 'knowz-io',
+              repo: 'knowz-issues',
+              issue_number: issue.number,
+              body: `Thanks for reporting! This has been triaged and is being tracked internally. We'll update this issue when there's progress.`
+            });
+
+            console.log(`Created mirror issue: ${result.data.html_url}`);

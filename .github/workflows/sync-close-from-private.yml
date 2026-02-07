@@ -1,0 +1,36 @@
+name: Sync Close from Private
+on:
+  repository_dispatch:
+    types: [issue-resolved]
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close public issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { public_issue_number, resolution } = context.payload.client_payload;
+
+            if (!public_issue_number) {
+              console.log('No public_issue_number in payload, skipping');
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner: 'knowz-io',
+              repo: 'knowz-issues',
+              issue_number: public_issue_number,
+              body: `This has been resolved! ${resolution || ''}\n\nThe fix will be available in the next release.`
+            });
+
+            await github.rest.issues.update({
+              owner: 'knowz-io',
+              repo: 'knowz-issues',
+              issue_number: public_issue_number,
+              state: 'closed',
+              state_reason: 'completed'
+            });
+
+            console.log(`Closed public issue #${public_issue_number}`);

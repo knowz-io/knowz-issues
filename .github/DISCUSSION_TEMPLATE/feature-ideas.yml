@@ -1,0 +1,27 @@
+title: "[Feature Idea] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share your feature idea with the community! Get feedback before filing a formal feature request.
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What's your idea?
+      description: Describe the feature or improvement you have in mind.
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve?
+      description: What's the pain point or use case?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any mockups, examples from other tools, or other context.

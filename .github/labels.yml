@@ -1,0 +1,48 @@
+# Triage
+- name: triaged
+  color: "0e8a16"
+  description: Reviewed by maintainer
+- name: needs-info
+  color: "fbca04"
+  description: Waiting on reporter for more information
+
+# Type
+- name: bug
+  color: "d73a4a"
+  description: Something isn't working
+- name: feature
+  color: "a2eeef"
+  description: New feature or enhancement request
+- name: question
+  color: "d876e3"
+  description: Further information is requested
+- name: documentation
+  color: "0075ca"
+  description: Documentation improvements
+
+# Priority
+- name: priority-high
+  color: "b60205"
+  description: High priority issue
+- name: priority-low
+  color: "c5def5"
+  description: Low priority issue
+
+# Claude
+- name: claude-fix
+  color: "5319e7"
+  description: Auto-triggers Claude to investigate and propose a fix
+- name: claude-reviewed
+  color: "bfdadc"
+  description: Claude has reviewed this issue
+
+# Status
+- name: in-progress
+  color: "ededed"
+  description: Currently being worked on
+- name: resolved
+  color: "0e8a16"
+  description: Issue has been resolved
+- name: wont-fix
+  color: "ffffff"
+  description: This will not be worked on

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question
+    url: https://github.com/knowz-io/knowz-issues/discussions/categories/q-a
+    about: Ask questions about Knowz in Discussions
+  - name: Security Vulnerability
+    url: https://github.com/knowz-io/knowz-issues/blob/main/docs/SECURITY.md
+    about: Report security vulnerabilities privately (do not open a public issue)
+  - name: Feature Discussion
+    url: https://github.com/knowz-io/knowz-issues/discussions/categories/feature-ideas
+    about: Discuss feature ideas before filing a formal request
