@@ -7,5 +7,5 @@ contact_links:
     url: https://github.com/knowz-io/knowz-issues/blob/main/docs/SECURITY.md
     about: Report security vulnerabilities privately (do not open a public issue)
   - name: Feature Discussion
-    url: https://github.com/knowz-io/knowz-issues/discussions/categories/feature-ideas
+    url: https://github.com/knowz-io/knowz-issues/discussions/categories/ideas
     about: Discuss feature ideas before filing a formal request
