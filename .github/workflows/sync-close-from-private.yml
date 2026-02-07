@@ -22,7 +22,7 @@ jobs:
               owner: 'knowz-io',
               repo: 'knowz-issues',
               issue_number: public_issue_number,
-              body: `This has been resolved! ${resolution || ''}\n\nThe fix will be available in the next release.`
+              body: `This has been resolved! ${resolution || ''}\n\nThe fix will be available soon in an upcoming release.`
             });
 
             await github.rest.issues.update({

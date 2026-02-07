@@ -33,7 +33,7 @@ jobs:
               owner: 'knowz-io',
               repo: 'knowz-issues',
               issue_number: issue.number,
-              body: `Thanks for reporting! This has been triaged and is being tracked internally. We'll update this issue when there's progress.`
+              body: `Thanks for your submission. Each and every submission will be carefully reviewed. Thanks for helping to improve Knowz!`
             });
 
             console.log(`Created mirror issue: ${result.data.html_url}`);

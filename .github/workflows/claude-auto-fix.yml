@@ -21,12 +21,6 @@ jobs:
 
             if (searchResult.total_count === 0) {
               console.log('No mirrored issue found in knowz-platform');
-              await github.rest.issues.createComment({
-                owner: 'knowz-io',
-                repo: 'knowz-issues',
-                issue_number: context.payload.issue.number,
-                body: `The \`claude-fix\` label was added, but no mirrored issue was found in the internal repo. A maintainer will investigate.`
-              });
               return;
             }
 
@@ -45,14 +39,6 @@ jobs:
               repo: 'knowz-platform',
               issue_number: mirror.number,
               body: '@claude Please investigate this issue and propose a fix.'
-            });
-
-            // Acknowledge on the public issue
-            await github.rest.issues.createComment({
-              owner: 'knowz-io',
-              repo: 'knowz-issues',
-              issue_number: context.payload.issue.number,
-              body: `Claude has been triggered to investigate this issue. We'll update here when there's a proposed fix.`
             });
 
             console.log(`Triggered Claude on knowz-platform#${mirror.number}`);
